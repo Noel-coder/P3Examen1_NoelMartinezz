@@ -5,6 +5,8 @@ HTHPlus::HTHPlus() {
 
 HTHPlus::~HTHPlus() {
 }
+//
+vector <string> listaGenero;
 
 void HTHPlus::agregarPelicula(Pelicula* pelicula) {
 	listaPeliculas.push_back(pelicula);
@@ -83,10 +85,73 @@ void HTHPlus::modificarPelicula(int opcion, int posicion) {
 	}
 }
 
-void HTHPlus::eliminarPelicula(int posicion){
+void HTHPlus::eliminarPelicula(int posicion) {
 	for(int i=0; i < listaPeliculas.size(); i++) {
 		if(i==posicion) {
 			listaPeliculas.erase(listaPeliculas.begin()+1);
 		}
+	}
+}
+
+void HTHPlus::listarGenero() {
+	Pelicula* pelicula;
+	vector <string> listaGenero;
+	for(int i = 0; i < listaPeliculas.size(); i++) {
+		pelicula = listaPeliculas[i];
+		string genero ="";
+		genero = pelicula->getGenero();
+		//validacion
+		if(listaGenero.empty()) {
+			listaGenero.push_back(genero);
+		} else {
+			int contador=0;
+			for(int i = 0; listaGenero.size(); i++) {
+				string temporal = "";
+				temporal = listaGenero[i];
+				if(genero == temporal) {
+					contador++;
+				}
+			}
+			if(contador==0) {
+				listaGenero.push_back(genero);
+			}
+		}
+	}
+	for(int i=0; i < listaGenero.size(); i++) {
+		string temporal = "";
+		temporal=listaGenero[i];
+		cout << temporal << ": "<<endl;
+		for(int j = 0; j < listaPeliculas.size(); j++) {
+			pelicula=listaPeliculas[j];
+			if(temporal == pelicula->getGenero()) {
+				cout << "#" << j << " " << pelicula->getTitulo()<<"-"<<pelicula->getDirector()<<"-"<<pelicula->getValoracion()<<"/5"<<endl;
+			}
+		}
+
+	}
+}
+
+void HTHPlus::BuscarPelicula(string _titulo) {
+	for(int i = 0; i < listaPeliculas.size(); i++) {
+		Pelicula* pelicula = listaPeliculas[i];
+		string tituloTemporal = pelicula->getTitulo();
+		if(tituloTemporal.find(_titulo) != string::npos) {
+			cout << "#" << i << " " << pelicula->getTitulo()<<"-"<<pelicula->getDirector()<<"-"<<pelicula->getValoracion()<<"/5"<<endl;
+		}
+	}
+}
+
+
+void HTHPlus::listarValoraciones() {
+	int contador = 5;
+	for(int i = 0; i < 5; i++) {
+		for(int j = 0; j < listaPeliculas.size(); j++) {
+			Pelicula* pelicula = listaPeliculas[j];
+			int temporal = pelicula->getValoracion();
+			if(temporal==contador) {
+				cout << "# " << j << pelicula->getTitulo()<<"-"<<pelicula->getDirector()<<"-"<<pelicula->getValoracion()<<"/5"<<endl;
+			}
+		}
+		contador--;
 	}
 }

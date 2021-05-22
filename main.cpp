@@ -5,7 +5,9 @@
 using namespace std;
 int menu() {
 	while(true) {
-		cout <<"[ Peliculas HTH ]"<<endl
+		cout <<"[================]"<<endl
+		     <<"  Peliculas HTH "<<endl
+		     <<"[================]"<<endl
 		     <<"1. Agregar Pelicula: "<<endl
 		     <<"2. Modificar Pelicula: "<<endl
 		     <<"3. Eliminar Pelicula: "<<endl
@@ -22,22 +24,22 @@ int menu() {
 	}
 }
 
-int subMenu(){
-	while(true){
+int subMenu() {
+	while(true) {
 		cout << "[SubMenu Modificar]" << endl
-			 << "1. Modificar Titulo: " << endl
-			 << "2. Modificar Director: "<< endl
-			 << "3. Modificar Genero: "<< endl
-			 << "4. Modificar Valoracion: " << endl
-			 << "Ingrese una opcion: ";
+		     << "1. Modificar Titulo: " << endl
+		     << "2. Modificar Director: "<< endl
+		     << "3. Modificar Genero: "<< endl
+		     << "4. Modificar Valoracion: " << endl
+		     << "Ingrese una opcion: ";
 		int valorSub;
 		cin>>valorSub;
 		if(valorSub > 0 && valorSub < 5)
 			return valorSub;
-	}	
+	}
 }
 
-void agregarPelicula(HTHPlus* aggPelicula){
+void agregarPelicula(HTHPlus* aggPelicula) {
 	string titulo,director,genero;
 	int valoracion;
 	cout << "Ingrese el titulo de la pelicula: " << endl;
@@ -49,18 +51,18 @@ void agregarPelicula(HTHPlus* aggPelicula){
 	getline(cin,genero);
 	cout << "Valoracion de la Pelicula: " << endl;
 	valoracion = 1 + rand()%5;
-	cout << valoracion << endl; 
+	cout << valoracion << endl;
 	aggPelicula->agregarPelicula(new Pelicula(titulo,director,genero,valoracion));
 	cout << "La Pelicula ha sido guardada exitosamente!" << endl;
 }
 
-void modificarPelicula(HTHPlus* aggPelicula){
+void modificarPelicula(HTHPlus* aggPelicula) {
 	cout << "Peliculas: "<<endl;
 	aggPelicula->listarPeliculas();
 	int opcion, posicion;
 	cout << "Ingrese la posicion de la pelicula que desea modificar: " << endl;
 	cin >> posicion;
-	while(posicion < 0){
+	while(posicion < 0) {
 		cout << "La posicion no puede ser negativa" << endl;
 		cout << "Ingrese la posicion de la pelicula que desea modificar: " << endl;
 		cin >> posicion;
@@ -69,13 +71,13 @@ void modificarPelicula(HTHPlus* aggPelicula){
 	aggPelicula->modificarPelicula(opcion,posicion);
 }
 
-void eliminarPelicula(HTHPlus* aggPelicula){
+void eliminarPelicula(HTHPlus* aggPelicula) {
 	cout << "Peliculas: " << endl;
 	aggPelicula->listarPeliculas();
 	int posicion;
 	cout << "Ingrese la posicion de la pelicula que desea eliminar: " << endl;
 	cin >> posicion;
-	while(posicion < 0){
+	while(posicion < 0) {
 		cout << "La posicion no puede ser negativa" << endl;
 		cout << "Ingrese la posicion de la pelicula que desea eliminar: " << endl;
 		cin >> posicion;
@@ -87,7 +89,7 @@ void eliminarPelicula(HTHPlus* aggPelicula){
 
 int main(int argc, char** argv) {
 	srand(time(NULL));
-	system("color 09");
+	system("color 01");
 	HTHPlus* aggPelicula = new HTHPlus();
 	int opcion=0;
 	while(opcion != 8) {
@@ -102,35 +104,41 @@ int main(int argc, char** argv) {
 				modificarPelicula(aggPelicula);
 				break;
 			}
-			case 3:{
+			case 3: {
 				//Eliminar Pelicula
 				eliminarPelicula(aggPelicula);
 				break;
 			}
-			case 4:{
+			case 4: {
 				//listar Peliculas
 				aggPelicula->listarPeliculas();
 				break;
 			}
-			case 5:{
+			case 5: {
 				//Imprimir Peliculas por genero
-				
+				aggPelicula->listarGenero(); 
 				break;
 			}
-			case 6:{
+			case 6: {
 				//Buscar Pelicula
+				string buscador;
+				cin.ignore();
+				cout << "Ingrese alguna letra o frase para buscar su pelicula: " <<endl;
+				getline(cin,buscador);
+				cout << endl;
+				aggPelicula->BuscarPelicula(buscador);
 				break;
 			}
-			case 7:{
+			case 7: {
 				//Imprimir peliculas ordenadas por valoracion
-				
+				aggPelicula->listarValoraciones();
 				break;
 			}
-			case 8:{
+			case 8: {
 				cout << "Gracias Por Utilizar HTHPlus! Vuelva Pronto...";
 				break;
 			}
-			default:{
+			default: {
 				cout << "Valor Ingresado no es valido!";
 				break;
 			}
